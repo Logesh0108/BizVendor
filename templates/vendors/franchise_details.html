@@ -1,0 +1,67 @@
+{% extends 'vendors/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-4 fade-in">
+
+    <div class="jumbotron text-center py-4">
+        <h1 class="display-4">Franchise Details</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-4">
+            <div class="card p-4 shadow hotel-card">
+
+                <h3 class="mb-3">Hotel Information</h3>
+
+                {% for label, value in vendor_details.items %}
+                    <p><strong>{{ label }}:</strong> {{ value }}</p>
+                {% endfor %}
+
+
+
+                {% if vendor.restaurant_lic %}
+                    <p><strong>License:</strong></p>
+                    <img src="{{ vendor.restaurant_lic.url }}" width="200" class="img-thumbnail mb-2 rounded">
+                {% endif %}
+
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card p-4 shadow hotel-card">
+
+                <h3 class="mb-3">Franchise Details</h3>
+                <a href="{% url 'emicalculation' id=vendor.id %}" class="btn btn-primary w-50">EMI Available</a>
+                <br><br>
+
+                {% if franchise_details %}
+                {% if vendor.restaurant_img %}
+                    <p><strong>Image:</strong></p>
+                    <img src="{{ vendor.restaurant_img.url }}" width="200" class="img-thumbnail mb-2 rounded">
+                {% endif %}                      
+                    {% for label, value in franchise_details.items %}
+                        <p><strong>{{ label }}:</strong> {{ value }}</p>
+                        
+                    {% endfor %}
+                {% else %}
+                    <p class="text-danger"><strong>No franchise details available.</strong></p>
+                {% endif %}
+
+            </div>
+        </div>
+
+        <div class="col-md-12 text-center mt-3">
+            <form action="" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-success w-50">
+                    🚀 Accept Franchise
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

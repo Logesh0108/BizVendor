@@ -1,0 +1,28 @@
+{% extends 'vendors/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container " >
+    <div class="jumbotron">
+
+        {% if registered %}
+        <h1 class="text-success">Thank you for registration</h1>
+        <p>Waiting for Admin Approval</p>
+        {% else %}
+        <div class="col-md-6 mb-4 offset-md-3 mt-5 p-4 shadow-lg rounded-3 fade-in">
+            <h3>Vendor Registration</h3>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ user_form|crispy }}
+                {{ vendor_form|crispy }}
+                <br>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+
+
+
+
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

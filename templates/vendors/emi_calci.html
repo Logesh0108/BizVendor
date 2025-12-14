@@ -1,0 +1,56 @@
+{% extends 'vendors/base.html' %}
+{% block content %}
+
+<div class="container mt-5 col-md-6 offset-md-3 fade-in ">
+    <div class="card p-4 shadow-lg">
+
+        <h3 class="text-center mb-4">EMI Calculator</h3>
+
+        <p><strong>Restaurant:</strong> {{ vendor.restaurant_name }}</p>
+        <p><strong>Total Investment:</strong> ₹{{ franchise.total_investment }}</p>
+        <p><strong>Agreement Years:</strong> {{ franchise.aggr_years }}</p>
+
+        <hr>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label>Loan Amount</label>
+                <input type="number" name="loan_amount" class="form-control" required>
+            </div>
+
+            <div class="mb-3 ">
+                <label>Number of Years (1 / 2 / 5 / 7 / 10)</label>
+                <select name="years" id="years" class="form-control" required>
+                    <option value="1">1 Year</option>
+                    <option value="2">2 Years</option>
+                    <option value="5">5 Years</option>
+                    <option value="7">7 Years</option>
+                    <option value="10">10 Years</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-danger w-50 mx-auto d-block">
+                Calculate EMI
+            </button>
+        </form>
+
+        {% if error %}
+        <div class="alert alert-danger mt-4 text-center">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if emi %}
+        <div class="alert alert-success mt-4 text-center">
+            <p><strong>Interest Rate : </strong> {{ interest_rate }}%</p>
+            <p><strong>Monthly EMI : </strong> ₹{{ emi }}</p>
+            <p><strong>Years : </strong>{{ years }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

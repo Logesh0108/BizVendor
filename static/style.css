@@ -1,0 +1,113 @@
+        .custom-navbar {
+            background: linear-gradient(90deg, #7c3aed, #8b5cf6, #2563eb);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #fff !important;
+        }
+
+        .navbar-brand:hover {
+            color: #e9d5ff !important;
+            transition: 0.3s;
+        }
+
+        .custom-link {
+            color: #ffffff !important;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
+            margin-right: 15px;
+        }
+
+        .custom-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 2px;
+            width: 0;
+            background-color: #ffffff;
+            transition: width 0.3s ease-in-out;
+        }
+
+        .custom-link:hover::after {
+            width: 100%;
+        }
+
+        .login-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: rgba(124, 58, 237, 0.95);
+                backdrop-filter: blur(12px);
+                border-radius: 12px;
+                margin-top: 12px;
+                padding: 15px;
+            }
+        }
+
+        body {
+            padding-top: 80px; /* avoids navbar overlap */
+        }
+        .gradient-footer {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.social-icon {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #ffffff;
+}
+
+.newsletter-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    box-shadow: none;
+}

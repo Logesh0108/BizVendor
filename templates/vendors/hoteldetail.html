@@ -1,0 +1,89 @@
+{% extends 'vendors/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-4">
+
+    <div class="jumbotron">
+        <h1 class="display-4">Hotel Details</h1>
+    </div>
+
+    <!-- HOTEL DETAILS -->
+    <div class="row">
+        <div class="card p-4 mb-5 col-md-6 shadow">
+
+            <h3 class="mb-3">Hotel Information</h3>
+
+            <p><strong>Restaurant Name:</strong> {{ vendor.restaurant_name }}</p>
+            <p><strong>Address:</strong> {{ vendor.address }}</p>
+            <p><strong>City:</strong> {{ vendor.city }}</p>
+            <p><strong>State:</strong> {{ vendor.state }}</p>
+            <p><strong>Zip Code:</strong> {{ vendor.zip_code }}</p>
+
+            {% if vendor.restaurant_lic %}
+            <p><strong>License:</strong></p>
+            <img src="{{ vendor.restaurant_lic.url }}" width="200" class="img-thumbnail mb-2">
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            {% if role == "user" %}
+                {% if franchise %}
+                <form action="{% url 'franchise_details' vendor.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-warning w-100 mb-2">Invest in Franchise</button>
+                </form>
+                {% endif %}
+
+            {% endif %}
+        </div>
+    </div>
+
+
+    <!-- FOOD ITEMS -->
+    <div class="card p-4 mb-5 shadow">
+        <h3 class="mb-3">Food Items</h3>
+
+        {% if food_items %}
+        <div class="row">
+
+            {% for item in food_items %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+
+                    {% if item.item_img %}
+                    <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.item_name }}">
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.item_name }}</h5>
+                        <p class="card-text">{{ item.item_desc }}</p>
+                        <p class="card-text"><strong>Price:</strong> ₹{{ item.item_price }}</p>
+
+                        <!-- USER ROLE -->
+                        {% if role == "user" %}
+                        <form action="{% url 'add_to_cart' item.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </form>
+                        {% endif %}
+
+                        <!-- VENDOR ROLE -->
+                        {% if role == "vendor" %}
+                        <a href="{% url 'add_menu' vendor.id %}" class="btn btn-success w-100">
+                            Edit Menu
+                        </a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <p>No food items available.</p>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

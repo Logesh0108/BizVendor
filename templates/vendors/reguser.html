@@ -1,0 +1,28 @@
+{% extends 'vendors/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="jumbotron">
+        <div class="col-md-6 mb-4 offset-md-3 mt-5 p-4 shadow-lg rounded-3 fade-in">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col md-6">
+                        <h3>User Registration</h3>
+                        <br>
+                        {{ user_form|crispy }}
+                        <br>
+                    </div>
+                    <br><br>
+                    <button type="submit"  class="btn btn-success">Register User</button>
+                </div>
+        </div>
+        </form>
+    </div>
+
+</div>
+</div>
+
+{% endblock %}

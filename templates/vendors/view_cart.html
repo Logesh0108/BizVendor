@@ -1,0 +1,41 @@
+{% extends 'vendors/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Your Cart</h2>
+    <hr>
+
+    {% if cart_items %}
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Food Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.item.item_name }}</td>
+                    <td>₹{{ item.item.item_price }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.item.item_price|floatformat:2|add:item.quantity }}</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.item.id %}" 
+                           class="btn btn-danger btn-sm">Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h4 class="text-right">Total: ₹{{ total_price }}</h4>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
