@@ -172,7 +172,7 @@ This project is for educational purposes.
 ## 👨‍💻 Author
 
 **Logesh N**
-GitHub: [https://github.com/your-username](https://github.com/Logesh0108)
+GitHub: [https://github.com/Logesh0108](https://github.com/Logesh0108)
 
 ---
 
