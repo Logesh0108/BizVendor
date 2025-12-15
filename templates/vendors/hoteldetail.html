@@ -1,69 +1,90 @@
 {% extends 'vendors/base.html' %}
-{% block content %}
 {% load static %}
+{% block content %}
 
 <div class="container mt-4">
 
-    <div class="jumbotron">
+    <!-- PAGE HEADER -->
+    <div class="jumbotron text-center mb-4">
         <h1 class="display-4">Hotel Details</h1>
     </div>
 
-    <!-- HOTEL DETAILS -->
+    <!-- =========================
+         HOTEL + FRANCHISE SECTION
+    ========================== -->
     <div class="row">
-        <div class="card p-4 mb-5 col-md-6 shadow">
 
-            <h3 class="mb-3">Hotel Information</h3>
-
-            <p><strong>Restaurant Name:</strong> {{ vendor.restaurant_name }}</p>
-            <p><strong>Address:</strong> {{ vendor.address }}</p>
-            <p><strong>City:</strong> {{ vendor.city }}</p>
-            <p><strong>State:</strong> {{ vendor.state }}</p>
-            <p><strong>Zip Code:</strong> {{ vendor.zip_code }}</p>
-
-            {% if vendor.restaurant_lic %}
-            <p><strong>License:</strong></p>
-            <img src="{{ vendor.restaurant_lic.url }}" width="200" class="img-thumbnail mb-2">
-            {% endif %}
-        </div>
+        <!-- LEFT COLUMN : HOTEL DETAILS -->
         <div class="col-md-6">
-            {% if role=="vendor" %}
-            <div class="card p-4 shadow mb-4 bg-light">
+            <div class="card p-4 mb-4 shadow">
 
-            <h3 class="mb-3 text-success">Franchise Owner Details</h3>
+                <h3 class="mb-3">Hotel Information</h3>
 
-            <p><strong>Name:</strong> {{ user_details.name }}</p>
-            <p><strong>Email:</strong> {{ user_details.email }}</p>
+                <p><strong>Restaurant Name:</strong> {{ vendor.restaurant_name }}</p>
+                <p><strong>Address:</strong> {{ vendor.address }}</p>
+                <p><strong>City:</strong> {{ vendor.city }}</p>
+                <p><strong>State:</strong> {{ vendor.state }}</p>
+                <p><strong>Zip Code:</strong> {{ vendor.zip_code }}</p>
 
-            <hr>
-
-            <h4 class="text-primary">EMI Details</h4>
-            <p><strong>EMI / Month:</strong> ₹ {{ emi_details.emi_per_month }}</p>
-            <p><strong>Tenure:</strong> {{ emi_details.years }} years</p>
-            <p><strong>Interest Rate:</strong> {{ emi_details.interest_rate }}%</p>
-
-            <span class="badge bg-success">Franchise Accepted</span>
-
-        </div>
-            {% endif %} 
-
-        </div>
-        <div class="col-md-6">
-            {% if role == "user" %}
-                {% if franchise %}
-                <form action="{% url 'franchise_details' vendor.id %}" method="POST">
-                    {% csrf_token %}
-                    <button class="btn btn-warning w-100 mb-2">Invest in Franchise</button>
-                </form>
+                {% if vendor.restaurant_lic %}
+                    <p><strong>License:</strong></p>
+                    <img src="{{ vendor.restaurant_lic.url }}"
+                         class="img-thumbnail mb-2"
+                         width="200">
                 {% endif %}
 
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN : EMI + USER DETAILS -->
+        <div class="col-md-6">
+
+            {% if franchise_accepted %}
+            <!-- SHOW AFTER FRANCHISE ACCEPTED -->
+            <div class="card p-4 mb-4 shadow bg-light">
+
+                <h3 class="mb-3 text-success">Franchise Owner Details</h3>
+
+                <p><strong>Name:</strong> {{ user_details.name }}</p>
+                <p><strong>Email:</strong> {{ user_details.email }}</p>
+
+                <hr>
+
+                <h4 class="text-primary">EMI Details</h4>
+                <p><strong>EMI / Month:</strong> ₹ {{ emi_details.emi_per_month }}</p>
+                <p><strong>Tenure:</strong> {{ emi_details.years }} years</p>
+                <p><strong>Interest Rate:</strong> {{ emi_details.interest_rate }}</p>
+
+                <span class="badge bg-success mt-2">
+                    Franchise Accepted
+                </span>
+
+            </div>
+
+            {% elif role == "user" %}
+            <!-- SHOW ONLY TO USERS BEFORE ACCEPTANCE -->
+            <div class="card p-4 mb-4 shadow">
+
+                <h4 class="mb-3 text-warning">Interested in Franchise?</h4>
+
+                <form action="{% url 'franchise_details' vendor.id %}">
+                    <button type="submit" class="btn btn-warning w-100">
+                        Invest in Franchise
+                    </button>
+                </form>
+
+            </div>
             {% endif %}
+
         </div>
     </div>
 
-
-    <!-- FOOD ITEMS -->
+    <!-- =========================
+         FOOD ITEMS SECTION
+    ========================== -->
     <div class="card p-4 mb-5 shadow">
-        <h3 class="mb-3">Food Items</h3>
+
+        <h3 class="mb-4">Food Items</h3>
 
         {% if food_items %}
         <div class="row">
@@ -73,25 +94,33 @@
                 <div class="card h-100 shadow-sm">
 
                     {% if item.item_img %}
-                    <img src="{{ item.item_img.url }}" class="card-img-top" alt="{{ item.item_name }}">
+                    <img src="{{ item.item_img.url }}"
+                         class="card-img-top"
+                         alt="{{ item.item_name }}">
                     {% endif %}
 
                     <div class="card-body">
+
                         <h5 class="card-title">{{ item.item_name }}</h5>
                         <p class="card-text">{{ item.item_desc }}</p>
-                        <p class="card-text"><strong>Price:</strong> ₹{{ item.item_price }}</p>
+                        <p class="card-text">
+                            <strong>Price:</strong> ₹{{ item.item_price }}
+                        </p>
 
-                        <!-- USER ROLE -->
+                        <!-- USER ACTION -->
                         {% if role == "user" %}
                         <form action="{% url 'add_to_cart' item.id %}" method="POST">
                             {% csrf_token %}
-                            <button class="btn btn-primary w-100">Add to Cart</button>
+                            <button class="btn btn-primary w-100">
+                                Add to Cart
+                            </button>
                         </form>
                         {% endif %}
 
-                        <!-- VENDOR ROLE -->
+                        <!-- VENDOR ACTION -->
                         {% if role == "vendor" %}
-                        <a href="{% url 'add_menu' vendor.id %}" class="btn btn-success w-100">
+                        <a href="{% url 'add_menu' vendor.id %}"
+                           class="btn btn-success w-100">
                             Edit Menu
                         </a>
                         {% endif %}
@@ -103,9 +132,11 @@
 
         </div>
         {% else %}
-        <p>No food items available.</p>
+            <p class="text-muted">No food items available.</p>
         {% endif %}
+
     </div>
 
 </div>
+
 {% endblock %}
