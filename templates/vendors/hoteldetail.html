@@ -26,6 +26,28 @@
             {% endif %}
         </div>
         <div class="col-md-6">
+            {% if role=="vendor" %}
+            <div class="card p-4 shadow mb-4 bg-light">
+
+            <h3 class="mb-3 text-success">Franchise Owner Details</h3>
+
+            <p><strong>Name:</strong> {{ user_details.name }}</p>
+            <p><strong>Email:</strong> {{ user_details.email }}</p>
+
+            <hr>
+
+            <h4 class="text-primary">EMI Details</h4>
+            <p><strong>EMI / Month:</strong> ₹ {{ emi_details.emi_per_month }}</p>
+            <p><strong>Tenure:</strong> {{ emi_details.years }} years</p>
+            <p><strong>Interest Rate:</strong> {{ emi_details.interest_rate }}%</p>
+
+            <span class="badge bg-success">Franchise Accepted</span>
+
+        </div>
+            {% endif %} 
+
+        </div>
+        <div class="col-md-6">
             {% if role == "user" %}
                 {% if franchise %}
                 <form action="{% url 'franchise_details' vendor.id %}" method="POST">

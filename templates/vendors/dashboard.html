@@ -4,8 +4,7 @@
 
 <!-- ================= HERO SECTION ================= -->
 <div class="container-fluid p-0 position-relative">
-    <img src="{% static 'hotel.jpg' %}" class="img-fluid w-100"
-         style="height:400px; object-fit:cover;">
+    <img src="{% static 'hotel.jpg' %}" class="img-fluid w-100" style="height:400px; object-fit:cover;">
 
     <div class="position-absolute top-50 start-50 translate-middle text-white text-center">
         <h1 class="fw-bold">Vendor Management System</h1>
@@ -19,9 +18,9 @@
         <h2 class="fw-bold">Welcome, {{ user.username }} 👋</h2>
 
         {% if role == "vendor" %}
-            <span class="badge bg-success fs-6 mt-2">Vendor Account</span>
+        <span class="badge bg-success fs-6 mt-2">Vendor Account</span>
         {% else %}
-            <span class="badge bg-primary fs-6 mt-2">User Account</span>
+        <span class="badge bg-primary fs-6 mt-2">User Account</span>
         {% endif %}
     </div>
 </div>
@@ -45,9 +44,9 @@
                 <div class="card-body">
                     <h6>Approval Status</h6>
                     {% if data.approved %}
-                        <span class="badge bg-success">Approved</span>
+                    <span class="badge bg-success">Approved</span>
                     {% else %}
-                        <span class="badge bg-warning text-dark">Pending</span>
+                    <span class="badge bg-warning text-dark">Pending</span>
                     {% endif %}
                 </div>
             </div>
@@ -100,9 +99,9 @@
 
             <div class="col-md-4 text-center">
                 {% if data.restaurant_lic %}
-                    <img src="{{ data.restaurant_lic.url }}" class="img-thumbnail">
+                <img src="{{ data.restaurant_lic.url }}" class="img-thumbnail">
                 {% else %}
-                    <p class="text-muted">No License Uploaded</p>
+                <p class="text-muted">No License Uploaded</p>
                 {% endif %}
             </div>
 
@@ -121,7 +120,7 @@
             <p><strong>Username:</strong> {{ user.username }}</p>
 
             {% if data.phone %}
-                <p><strong>Phone:</strong> {{ data.phone }}</p>
+            <p><strong>Phone:</strong> {{ data.phone }}</p>
             {% endif %}
         </div>
     </div>
@@ -130,7 +129,7 @@
 </div>
 
 <!-- ================= ALL VENDORS LIST ================= -->
-<div class="container mt-5">
+<div class="container mt-5 mb-3" >
     <h3 class="fw-bold mb-4">Available Vendors</h3>
 
     <div class="row g-4">
@@ -139,54 +138,52 @@
             <div class="card shadow-sm h-100">
 
                 {% if v.restaurant_lic %}
-                <img src="{{ v.restaurant_lic.url }}"
-                     class="card-img-top"
-                     style="height:200px; object-fit:cover;">
+                <img src="{{ v.restaurant_lic.url }}" class="card-img-top" style="height:200px; object-fit:cover;">
                 {% endif %}
 
                 <div class="card-body">
-    <h5 class="card-title">{{ v.restaurant_name }}</h5>
-    <p class="text-muted">{{ v.city }}</p>
+                    <h5 class="card-title">{{ v.restaurant_name }}</h5>
+                    <p class="text-muted">{{ v.city }}</p>
 
-    <!-- ================= BUTTON LOGIC ================= -->
+                    <!-- ================= BUTTON LOGIC ================= -->
 
-    {% if user.is_superuser %}
-        <!-- Superuser: Add + Edit Menu -->
-        <a href="{% url 'add_menu' v.id %}" class="btn btn-sm btn-success mb-1">
-            Add Menu
-        </a>
-        <a href="" class="btn btn-sm btn-warning mb-1">
-            Edit Menu
-        </a>
+                    {% if user.is_superuser %}
+                    <!-- Superuser: Add + Edit Menu -->
+                    <a href="{% url 'add_menu' v.id %}" class="btn btn-sm btn-success mb-1">
+                        Add Menu
+                    </a>
+                    <a href="" class="btn btn-sm btn-warning mb-1">
+                        Edit Menu
+                    </a>
 
-    {% elif role == "admin" %}
-        <!-- Admin: Add Menu only -->
-        <a href="{% url 'add_menu' v.id %}" class="btn btn-sm btn-success">
-            Add Menu
-        </a>
+                    {% elif role == "admin" %}
+                    <!-- Admin: Add Menu only -->
+                    <a href="{% url 'add_menu' v.id %}" class="btn btn-sm btn-success">
+                        Add Menu
+                    </a>
 
-    {% elif role == "vendor" %}
-        {% if data.id == v.id %}
-            <!-- Vendor: Own restaurant -->
-            <a href="{% url 'add_menu' v.id %}" class="btn btn-sm btn-primary">
-                Add Menu
-            </a>
-            <a href="{% url 'hoteldetail' v.id %} " class="btn btn-sm btn-outline-primary" >View Menu</a>
-        {% else %}
-            <!-- Vendor: Other restaurants -->
-            <a href="{% url 'hoteldetail' v.id %}" class="btn btn-sm btn-outline-primary">
-                View Menu
-            </a>
-            
-        {% endif %}
+                    {% elif role == "vendor" %}
+                    {% if data.id == v.id %}
+                    <!-- Vendor: Own restaurant -->
+                    <a href="{% url 'add_menu' v.id %}" class="btn btn-sm btn-primary">
+                        Add Menu
+                    </a>
+                    <a href="{% url 'hoteldetail' v.id %} " class="btn btn-sm btn-outline-primary">View Menu</a>
+                    {% else %}
+                    <!-- Vendor: Other restaurants -->
+                    <a href="{% url 'hoteldetail' v.id %}" class="btn btn-sm btn-outline-primary">
+                        View Menu
+                    </a>
 
-    {% else %}
-        <!-- Normal user -->
-        <a href="{% url 'hoteldetail' v.id %}" class="btn btn-sm btn-outline-secondary">
-            View Menu
-        </a>
-    {% endif %}
-</div>
+                    {% endif %}
+
+                    {% else %}
+                    <!-- Normal user -->
+                    <a href="{% url 'hoteldetail' v.id %}" class="btn btn-sm btn-outline-secondary">
+                        View Menu
+                    </a>
+                    {% endif %}
+                </div>
 
             </div>
         </div>

@@ -132,22 +132,49 @@ def hoteldetail(request, id):
 
     logged_user = request.user
 
-    if Multivendors.objects.filter(user=logged_user).exists():
-        role = "vendor"
-    else:
-        role = "user"
-    if Multivendors.objects.filter(user=logged_user, franchise=True).exists():
-        franchise = "franchise"
-    else:
-        franchise = "no franchise"
+    # ROLE
+    role = "vendor" if Multivendors.objects.filter(user=logged_user).exists() else "user"
+
+    # CHECK FRANCHISE ACCEPTED BY THIS USER FOR THIS VENDOR
+    franchise_accepted = Franchise.objects.filter(
+        vendor=vendor,
+        user=logged_user,
+        accepted=True
+    ).exists()
+
+    user_details = None
+    emi_details = None
+
+    if franchise_accepted:
+        # USER DETAILS
+        user_details = {
+            "name": logged_user.get_full_name() or logged_user.username,
+            "email": logged_user.email,
+        }
+
+        # GET FRANCHISE RECORD
+        franchise = Franchise.objects.filter(
+            vendor=vendor,
+            user=logged_user,
+            accepted=True
+        ).first()
+
+        # EMI DETAILS (if stored)
+        emi_details = {
+            "emi_per_month": franchise.emi_amount if franchise.emi_amount else "Not calculated",
+            "years": franchise.years if franchise.years else "-",
+            "interest_rate": franchise.interest_rate if franchise.interest_rate else "-",
+        }
 
     return render(request, 'vendors/hoteldetail.html', {
         'vendor': vendor,
         'food_items': food_items,
         'role': role,
-        'franchise': franchise
-
+        'franchise_accepted': franchise_accepted,
+        'user_details': user_details,
+        'emi_details': emi_details,
     })
+
 
 
 @login_required(login_url='login')

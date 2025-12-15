@@ -48,18 +48,19 @@
                 {% else %}
                     <p class="text-danger"><strong>No franchise details available.</strong></p>
                 {% endif %}
-
-            </div>
-        </div>
-
-        <div class="col-md-12 text-center mt-3 mb-3">
+                        <div class="col-md-12 text-center mt-3 mb-3">
             <form action="" method="POST">
                 {% csrf_token %}
-                <button class="btn btn-success w-50">
+                <button type="submit" class="btn btn-success w-50">
                     🚀 Accept Franchise
                 </button>
             </form>
         </div>
+
+            </div>
+        </div>
+
+
 
     </div>
 </div>
