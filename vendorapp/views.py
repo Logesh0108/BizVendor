@@ -208,6 +208,7 @@ def remove_from_cart(request, item_id):
 
     return redirect('view_cart')
 
+@login_required(login_url='login')
 def franchise_details(request, id):
     vendor = Multivendors.objects.get(id=id)
 
@@ -236,9 +237,7 @@ def franchise_details(request, id):
         "franchise_details": franchise_details
     })
 
-from django.shortcuts import render, get_object_or_404
-from .models import Multivendors
-
+@login_required(login_url='login')
 def emicalculation(request, id):
     vendor = get_object_or_404(Multivendors, id=id)
     franchise = vendor.franchises.first()

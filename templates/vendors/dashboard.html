@@ -171,16 +171,18 @@
             <a href="{% url 'add_menu' v.id %}" class="btn btn-sm btn-primary">
                 Add Menu
             </a>
+            <a href="{% url 'hoteldetail' v.id %} " class="btn btn-sm btn-outline-primary" >View Menu</a>
         {% else %}
             <!-- Vendor: Other restaurants -->
-            <a href="" class="btn btn-sm btn-outline-primary">
+            <a href="{% url 'hoteldetail' v.id %}" class="btn btn-sm btn-outline-primary">
                 View Menu
             </a>
+            
         {% endif %}
 
     {% else %}
         <!-- Normal user -->
-        <a href="" class="btn btn-sm btn-outline-secondary">
+        <a href="{% url 'hoteldetail' v.id %}" class="btn btn-sm btn-outline-secondary">
             View Menu
         </a>
     {% endif %}
